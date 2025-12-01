@@ -17,7 +17,15 @@ import {
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
   const [showBarcode, setShowBarcode] = useState(false);
-  const { getFollowersCount } = useFollowers();
+  
+  // Commented out since useFollowers context is not available
+  // const { getFollowersCount } = useFollowers();
+  // Using a fallback function instead
+  const getFollowersCount = () => {
+    return 0; // Default value, or you can implement your logic here
+    // If you want to use the context, uncomment the import and this line:
+    // return useFollowers().getFollowersCount?.() || 0;
+  };
 
   const tabs = [
     { label: "Products", icon: <FaTags className="text-sm" /> },
@@ -29,6 +37,10 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     { label: "Settings", icon: <FaCog className="text-sm" /> },
   ];
 
+  const getUnreadNotificationsCount = () => {
+    return 3; // You can replace this with actual logic
+  };
+
   const handleSignOut = () => {
     localStorage.clear();
     sessionStorage.clear();
@@ -36,10 +48,13 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   };
 
   const handleDownloadBarcode = () => {
-    const link = document.createElement("a");
-    link.href = barImage;
-    link.download = "barcode.jpg";
-    link.click();
+    // Temporarily disabled since barImage is commented out
+    // const link = document.createElement("a");
+    // link.href = barImage;
+    // link.download = "barcode.jpg";
+    // link.click();
+    
+    console.log("Download barcode functionality - add barImage import to enable");
   };
 
   const activeTabStyles =
@@ -144,11 +159,16 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
           {showBarcode && (
             <div className="mt-2 p-4 bg-white/80 backdrop-blur-lg rounded-xl border border-gray-200/60 shadow-md max-w-full min-w-0">
+              {/* Barcode image placeholder - uncomment when barImage is available */}
               {/* <img
                 src={barImage}
                 alt="Barcode"
                 className="w-full rounded-lg mb-3 border border-gray-200/60 min-w-0"
               /> */}
+              
+              <div className="w-full h-32 bg-gray-100 rounded-lg mb-3 border border-gray-200/60 flex items-center justify-center text-gray-400">
+                Barcode Preview
+              </div>
 
               <button
                 onClick={handleDownloadBarcode}
@@ -190,10 +210,6 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       </div>
     </div>
   );
-};
-
-const getUnreadNotificationsCount = () => {
-  return 3;
 };
 
 export default Sidebar;
