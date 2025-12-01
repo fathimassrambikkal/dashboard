@@ -173,7 +173,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
       {/* SIGN OUT */}
       <button
         onClick={handleSignOut}
-        className="group mt-4 flex items-center gap-2 justify-start px-2.5 py-2 rounded-lg bg-white/60 text-gray-700 border border-gray-200 shadow-inner hover:text-red-500 hover:border-red-200 transition w-full"
+        className="group mt-1 mb-10 md:mb-4 flex items-center gap-2 justify-start px-2.5 py-2 rounded-lg bg-white/60 text-gray-700 border border-gray-200 shadow-inner hover:text-red-500 hover:border-red-200 transition w-full"
       >
         <div className="w-5 h-5 rounded-md flex items-center justify-center bg-gray-100 text-gray-600 shadow-inner group-hover:bg-red-50 group-hover:text-red-500">
           <FaSignOutAlt className="text-[10px]" />
