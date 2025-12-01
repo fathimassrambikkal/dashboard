@@ -12,34 +12,22 @@ import {
   FaUserFriends,
   FaBell
 } from "react-icons/fa";
-// import barImage from "../assets/bar.jpg";
-// import { useFollowers } from "../context/FollowersContext";
 
 const Sidebar = ({ activeTab, setActiveTab }) => {
   const [showBarcode, setShowBarcode] = useState(false);
-  
-  // Commented out since useFollowers context is not available
-  // const { getFollowersCount } = useFollowers();
-  // Using a fallback function instead
-  const getFollowersCount = () => {
-    return 0; // Default value, or you can implement your logic here
-    // If you want to use the context, uncomment the import and this line:
-    // return useFollowers().getFollowersCount?.() || 0;
-  };
 
   const tabs = [
-    { label: "Products", icon: <FaTags className="text-sm" /> },
-    { label: "Sales", icon: <FaShoppingCart className="text-sm" /> },
-    { label: "Analytics", icon: <FaChartLine className="text-sm" /> },
-    { label: "Contacts", icon: <FaUsers className="text-sm" /> },
-    { label: "Followers", icon: <FaUserFriends className="text-sm" /> },
-    { label: "Notifications", icon: <FaBell className="text-sm" /> },
-    { label: "Settings", icon: <FaCog className="text-sm" /> },
+    { label: "Products", icon: <FaTags className="text-[10px]" /> },
+    { label: "Sales", icon: <FaShoppingCart className="text-[10px]" /> },
+    { label: "Analytics", icon: <FaChartLine className="text-[10px]" /> },
+    { label: "Contacts", icon: <FaUsers className="text-[10px]" /> },
+    { label: "Followers", icon: <FaUserFriends className="text-[10px]" /> },
+    { label: "Notifications", icon: <FaBell className="text-[10px]" /> },
+    { label: "Settings", icon: <FaCog className="text-[10px]" /> },
   ];
 
-  const getUnreadNotificationsCount = () => {
-    return 3; // You can replace this with actual logic
-  };
+  const getFollowersCount = () => 0;
+  const getUnreadNotificationsCount = () => 3;
 
   const handleSignOut = () => {
     localStorage.clear();
@@ -47,165 +35,160 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     window.location.href = "/sign";
   };
 
-  const handleDownloadBarcode = () => {
-    // Temporarily disabled since barImage is commented out
-    // const link = document.createElement("a");
-    // link.href = barImage;
-    // link.download = "barcode.jpg";
-    // link.click();
-    
-    console.log("Download barcode functionality - add barImage import to enable");
-  };
+  const handleDownloadBarcode = () => console.log("Download barcode");
 
+  // Slimmer theme
   const activeTabStyles =
-    "bg-blue-500/10 text-blue-600 border border-blue-200 shadow-lg shadow-blue-200/50";
+    "bg-blue-500/10 text-blue-600 border border-blue-200 shadow";
   const inactiveTabStyles =
-    "bg-white/60 text-gray-700 border border-gray-200/50 shadow-[inset_1px_1px_2px_rgba(255,255,255,0.8),inset_-1px_-1px_2px_rgba(0,0,0,0.05)] hover:shadow-[3px_3px_10px_rgba(0,0,0,0.08),-3px_-3px_10px_rgba(255,255,255,0.8)] hover:text-blue-500 hover:border-blue-100";
+    "bg-white/60 text-gray-700 border border-gray-200 shadow-inner hover:text-blue-500 hover:border-blue-100";
 
-  const activeIconStyles = "bg-blue-500 text-white shadow-md";
+  const activeIconStyles = "bg-blue-500 text-white shadow";
   const inactiveIconStyles =
-    "bg-gray-100 text-gray-600 shadow-[inset_2px_2px_4px rgba(0,0,0,0.05),inset_-2px_-2px_4px rgba(255,255,255,0.8)] group-hover:bg-blue-50 group-hover:text-blue-500";
+    "bg-gray-100 text-gray-600 shadow-inner group-hover:bg-blue-50 group-hover:text-blue-500";
 
   return (
     <div
       className="
-        bg-white/80 backdrop-blur-lg text-gray-900 h-full p-3 flex flex-col 
+        bg-white/80 backdrop-blur-lg text-gray-900 
+        h-full p-3 flex flex-col 
         border-r border-gray-200/60 
-        w-auto shrink-0 
-        overflow-y-auto overflow-x-hidden min-w-0
+        w-52 shrink-0 
+        overflow-hidden
       "
     >
 
       {/* USER PROFILE */}
-      <div className="p-3 border-b border-gray-200/60 mb-4 mt-6 min-w-0 overflow-x-hidden">
-        <div className="flex items-center min-w-0">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
-            <span className="text-white font-medium text-sm">C</span>
+      <div className="p-2 border-b border-gray-200/60 mb-3 mt-5">
+        <div className="flex items-center gap-2 justify-start">
+          <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow">
+            <span className="text-white font-medium text-xs">C</span>
           </div>
-          <div className="flex-1 ml-3 min-w-0 overflow-x-hidden">
-            <h2 className="text-base font-semibold text-gray-900 truncate break-words">Company</h2>
-            <p className="text-xs text-gray-600 truncate break-words">Business Account</p>
+
+          <div className="flex-1 min-w-0">
+            <h2 className="text-sm font-semibold text-gray-900 truncate">
+              Company
+            </h2>
+            <p className="text-[11px] text-gray-600 truncate">
+              Business Account
+            </p>
           </div>
         </div>
       </div>
 
       {/* MENU */}
-      <nav className="flex-1 flex flex-col gap-1 min-w-0 overflow-x-hidden">
+      <nav className="flex-1 flex flex-col gap-1 overflow-visible">
         {tabs.map((t) => {
           const isActive = activeTab === t.label;
-          const showBadge = t.label === "Followers" && getFollowersCount() > 0;
-          const showNotificationBadge =
-            t.label === "Notifications" && getUnreadNotificationsCount() > 0;
-
           return (
             <button
               key={t.label}
               onClick={() => setActiveTab(t.label)}
-              className={`group flex items-center p-2.5 rounded-xl transition-all duration-200 w-full min-w-0 overflow-x-hidden ${
+              className={`group flex items-center gap-2 justify-start px-2.5 py-2 rounded-lg transition-all duration-200 w-full ${
                 isActive ? activeTabStyles : inactiveTabStyles
               }`}
             >
               <div
-                className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
+                className={`w-5 h-5 rounded-md flex items-center justify-center transition-all ${
                   isActive ? activeIconStyles : inactiveIconStyles
                 }`}
               >
                 {t.icon}
               </div>
 
-              <span className="ml-3 text-sm font-medium flex-1 truncate break-words min-w-0">{t.label}</span>
+              <span className="text-[13px] font-medium truncate">
+                {t.label}
+              </span>
 
-              {showBadge && (
-                <span className="bg-green-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center flex-shrink-0">
+              {t.label === "Followers" && getFollowersCount() > 0 && (
+                <span className="bg-green-500 text-white text-[9px] rounded-full px-1.5 py-0.5 ml-auto">
                   {getFollowersCount()}
                 </span>
               )}
 
-              {showNotificationBadge && (
-                <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[20px] text-center flex-shrink-0">
-                  {getUnreadNotificationsCount()}
-                </span>
-              )}
+              {t.label === "Notifications" &&
+                getUnreadNotificationsCount() > 0 && (
+                  <span className="bg-red-500 text-white text-[9px] rounded-full px-1.5 py-0.5 ml-auto">
+                    {getUnreadNotificationsCount()}
+                  </span>
+                )}
 
-              {isActive && <FaChevronRight className="text-blue-500 text-xs flex-shrink-0" />}
+              {isActive && (
+                <FaChevronRight className="text-blue-500 text-[10px] ml-auto" />
+              )}
             </button>
           );
         })}
 
         {/* BARCODE BUTTON */}
-        <div className="relative min-w-0 overflow-x-hidden">
+        <div className="relative w-full">
           <button
             onClick={() => setShowBarcode(!showBarcode)}
-            className={`group flex items-center p-2.5 rounded-xl transition-all duration-200 w-full min-w-0 ${
+            className={`group flex items-center gap-2 justify-start px-2.5 py-2 rounded-lg transition-all duration-200 w-full ${
               showBarcode ? activeTabStyles : inactiveTabStyles
             }`}
           >
             <div
-              className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 flex-shrink-0 ${
+              className={`w-5 h-5 rounded-md flex items-center justify-center transition-all ${
                 showBarcode ? activeIconStyles : inactiveIconStyles
               }`}
             >
-              <FaDownload className="text-sm" />
+              <FaDownload className="text-[10px]" />
             </div>
 
-            <span className="ml-3 text-sm font-medium flex-1 truncate break-words min-w-0">Barcode</span>
+            <span className="text-[13px] font-medium truncate">
+              Barcode
+            </span>
 
             <FaChevronDown
-              className={`text-xs transition-transform duration-300 flex-shrink-0 ${
+              className={`text-[10px] ml-auto transition-transform duration-300 ${
                 showBarcode ? "rotate-180" : ""
               }`}
             />
           </button>
 
-          {showBarcode && (
-            <div className="mt-2 p-4 bg-white/80 backdrop-blur-lg rounded-xl border border-gray-200/60 shadow-md max-w-full min-w-0">
-              {/* Barcode image placeholder - uncomment when barImage is available */}
-              {/* <img
-                src={barImage}
-                alt="Barcode"
-                className="w-full rounded-lg mb-3 border border-gray-200/60 min-w-0"
-              /> */}
-              
-              <div className="w-full h-32 bg-gray-100 rounded-lg mb-3 border border-gray-200/60 flex items-center justify-center text-gray-400">
+          {/* Collapsible Panel — DOES NOT hide SignOut */}
+          <div
+            className={`transition-all duration-300 overflow-hidden ${
+              showBarcode ? "max-h-64 mt-2" : "max-h-0"
+            }`}
+          >
+            <div className="p-4 bg-white/80 backdrop-blur-lg rounded-xl border border-gray-200/60 shadow">
+              <div className="w-full h-28 bg-gray-100 rounded-lg mb-3 border flex items-center justify-center text-gray-400 text-xs">
                 Barcode Preview
               </div>
 
               <button
                 onClick={handleDownloadBarcode}
-                className="w-full px-3 py-2 bg-blue-500 text-white rounded-lg font-medium shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105 transition-all flex items-center justify-center gap-2 text-sm min-w-0 break-words"
+                className="w-full px-3 py-2 bg-blue-500 text-white rounded-lg font-medium shadow hover:scale-[1.03] transition text-sm"
               >
-                <FaDownload className="text-sm flex-shrink-0" />
-                Download Barcode
+                <FaDownload className="text-[10px] inline-block mr-2" />
+                Download
               </button>
             </div>
-          )}
+          </div>
         </div>
       </nav>
 
       {/* SIGN OUT */}
       <button
         onClick={handleSignOut}
-        className="group mb-3 md:mt-4 flex items-center p-2.5 rounded-xl bg-white/60 text-gray-700 border border-gray-200/50 
-        shadow-[inset_1px_1px_2px rgba(255,255,255,0.8),inset_-1px_-1px_2px rgba(0,0,0,0.05)]
-        hover:shadow-[3px_3px_10px rgba(220,38,38,0.1),-3px_-3px_10px rgba(255,255,255,0.8)]
-        hover:text-red-500 hover:border-red-200 transition-all duration-200 w-full min-w-0 overflow-x-hidden"
+        className="group mt-4 flex items-center gap-2 justify-start px-2.5 py-2 rounded-lg bg-white/60 text-gray-700 border border-gray-200 shadow-inner hover:text-red-500 hover:border-red-200 transition w-full"
       >
-        <div
-          className="w-7 h-7 rounded-lg flex items-center justify-center bg-gray-100 text-gray-600 
-          shadow-[inset_2px_2px_4px rgba(0,0,0,0.05),inset_-2px_-2px_4px rgba(255,255,255,0.8)]
-          group-hover:bg-red-50 group-hover:text-red-500 transition-all duration-200 flex-shrink-0"
-        >
-          <FaSignOutAlt className="text-xs" />
+        <div className="w-5 h-5 rounded-md flex items-center justify-center bg-gray-100 text-gray-600 shadow-inner group-hover:bg-red-50 group-hover:text-red-500">
+          <FaSignOutAlt className="text-[10px]" />
         </div>
 
-        <span className="ml-3 text-sm font-medium truncate break-words min-w-0">Sign Out</span>
+        <span className="text-[13px] font-medium truncate">
+          Sign Out
+        </span>
       </button>
 
       {/* STATUS */}
-      <div className="mt-4 pt-3 border-t border-gray-200/60 min-w-0 overflow-x-hidden">
-        <div className="flex items-center justify-between text-xs text-gray-600 min-w-0">
-          <span className="break-words">Online</span>
-          <div className="w-2 h-2 bg-green-500 rounded-full shadow-md flex-shrink-0"></div>
+      <div className="mt-3 pt-3 border-t border-gray-200">
+        <div className="flex items-center justify-between text-[11px] text-gray-600">
+          <span>Online</span>
+          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
         </div>
       </div>
     </div>
